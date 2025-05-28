@@ -1,9 +1,11 @@
 const wrapperPokedexHTML = document.querySelector('.wrapper__pokedex');
-const btn = document.querySelector('.btn');
+const btnSearch = document.querySelector('.btn--search');
+const btnNext = document.querySelector('.btn--next');
+const btnPrevious = document.querySelector('.btn--previous');
 const inputSearch = document.getElementById('search');
 const inputQuantity = document.getElementById('quantity');
 let pokemons;
-let pokemonsIndex;
+let offsetPage = 0
 
 async function getAPI() {
     try {
@@ -15,21 +17,12 @@ async function getAPI() {
         console.log('Erreur :', error);
     }
 }
-async function getIndexAPI(index = "") {
-    try {
-        const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${index}`)
-        const data = await response.json();
-        return data
-    } catch (error) {
-        alert('Erreur :', error);
-        console.log('Erreur :', error);
-    }
-}
+
 async function getOffset(offset = 0) {
     try {
         const response = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=20&offset=${offset}`)
         const data = await response.json();
-        return data
+        return data.results
     } catch (error) {
         alert('Erreur :', error);
         console.log('Erreur :', error);
@@ -38,8 +31,9 @@ async function getOffset(offset = 0) {
 
 
 
-async function displayPokemons() {
-    pokemons = await getAPI();
+async function displayPokemons(offset) {
+    wrapperPokedexHTML.innerHTML = "";
+    pokemons = await getOffset(offset);
     console.log(pokemons);
     
     for (const element of pokemons) {
@@ -47,8 +41,8 @@ async function displayPokemons() {
         const data = await response.json()
 
         const pokemonName = data.name;
-        const pokemonHeight = data.height;
-        const pokemonWeight = data.weight;
+        const pokemonHeight = data.height/10;
+        const pokemonWeight = data.weight/10;
         const pokemonImg = data.sprites.front_default;
         const pokemonHp = data.stats[0].base_stat
         const pokemonAtk = data.stats[1].base_stat
@@ -62,28 +56,28 @@ async function displayPokemons() {
         const pokemonContainer = document.createElement('div');
         pokemonContainer.className = "pokemon__single";
         pokemonContainer.innerHTML += `
-<div class="pokemon__sprite">
-<img src="${pokemonImg}" alt="${pokemonImg}">
-</div>
-<div class="pokemon__infos">
-    <div class="pokemon__name">${pokemonName}</div>
-    <div class="pokemon__types"><span class="subtitle">Type(s):</span></div>
-    <div class="pokemon__height"><span class="subtitle">Height:</span>${pokemonHeight} m</div>
-    <div class="pokemon__weight"><span class="subtitle">Weight:</span>${pokemonWeight} kg</div>
-    <div class="pokemon__stats">
-        <span class="subtitle">Stats:</span>  
-        <p class="stats__hp">hp: ${pokemonHp}</p>
-        <p class="stats__atk">attack: ${pokemonAtk}</p>
-        <p class="stats__def">defense: ${pokemonDef}</p>
-        <p class="stats__spAtk">special-attack: ${pokemonSpAtk}</p>
-        <p class="stats__spDef">special-defense: ${pokemonSpDef}</p>
-        <p class="stats__speed">speed: ${pokemonSpeed}</p>
-    </div>
-</div>
-
+        <div class="pokemon__sprite">
+        <img src="${pokemonImg}" alt="${pokemonImg}">
+        </div>
+        <div class="pokemon__infos">
+            <div class="pokemon__name">${pokemonName}</div>
+            <div class="pokemon__types"><span class="subtitle">Type(s): </span></div>
+            <div class="pokemon__height"><span class="subtitle">Height: </span>${pokemonHeight} m</div>
+            <div class="pokemon__weight"><span class="subtitle">Weight: </span>${pokemonWeight} kg</div>
+            <div class="pokemon__stats">
+                <span class="subtitle">Stats:</span>  
+                <p class="stats__hp">hp: ${pokemonHp}</p>
+                <p class="stats__atk">attack: ${pokemonAtk}</p>
+                <p class="stats__def">defense: ${pokemonDef}</p>
+                <p class="stats__spAtk">special-attack: ${pokemonSpAtk}</p>
+                <p class="stats__spDef">special-defense: ${pokemonSpDef}</p>
+                <p class="stats__speed">speed: ${pokemonSpeed}</p>
+            </div>
+        </div>
+        
         `
         wrapperPokedexHTML.append(pokemonContainer);  
-        console.log(data);
+        
         const typesContainer = pokemonContainer.querySelector('.pokemon__types');
         for (const type of pokemonTypes) {
 
@@ -97,12 +91,26 @@ async function displayPokemons() {
 
 displayPokemons();
 
-btn.addEventListener('click', async (e)=> {
+btnSearch.addEventListener('click', async (e)=> {
     e.preventDefault();
-    // const name = inputSearch.value;
-    // const limit = inputQuantity.value;
-    
     console.log(pokemons);
-        
+
+})
+btnNext.addEventListener('click', async (e)=> {
+    e.preventDefault();
+    if (offsetPage <= 1322) {
+        offsetPage += 20
+        await displayPokemons(offsetPage);
+    }
     
+
+})
+btnPrevious.addEventListener('click', async (e)=> {
+    e.preventDefault();
+    if (offsetPage != 0) {
+        offsetPage -= 20
+        await displayPokemons(offsetPage);
+    }
+    
+
 })
