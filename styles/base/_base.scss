@@ -1,5 +1,6 @@
 body{
-    background-color: rgb(34 34 34);
+    background-color: #141414;
+    padding-bottom: 3rem;
 }
 
 h1{
@@ -12,43 +13,9 @@ h1{
     text-align: center;
     padding-top: 2rem;
 
-    &__main{
-        margin-top: 3rem;
-    }
-
-    &__pokedex{
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 1.5rem;
-        max-width: 1200px;
-        padding-bottom: 3rem;
-    }
-
-    &--list{
-        background-color: white;
-        box-shadow: 5px 5px 10px hsla(271, 69%, 15%, 0.274);
-        border-radius: 15px;
-        padding: 2rem 1rem;
-        width: 100%;
-
-        & ul{
-            text-align: left;
-            padding: 0 2rem;
-            margin-top: 1rem;
-        }
-
-        & li{
-            font-size: 18px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 1rem;
-            margin-top: 1rem;
-            text-transform: capitalize;
-            padding-bottom: 1rem;
-            border-bottom: 2px solid #ddd4d5;
-        }
-    }
+    &--results{
+        max-width: 1600px;
+      }
 }
 
 form{
@@ -61,7 +28,7 @@ form{
 input,select, .btn{
     padding: 1rem;
     background-color: rgba(255, 255, 255, 0.87);
-    box-shadow: 5px 5px 1px hsla(263, 34%, 74%, 0.3);
+    box-shadow: 5px 5px 1px hsla(300, 1%, 37%, 0.3);
     border: none;
     border-radius: 5px;
 }
@@ -72,24 +39,6 @@ input{
     text-align: center;
 }
 
-.search-wrapper{
-    flex-basis: max-content;
-}
-
-.label{
-    position: absolute;
-    top: -10px;
-    left: 4%;
-    z-index: 55;
-    color: white;
-    font-size: 14px;
-    padding: .3rem .5rem;
-    border-radius: 25px;
-
-    &--search{
-        background-color: rgba(183, 1, 207);
-    }
-}
 
 .input-wrapper {
     position: relative;
@@ -104,7 +53,7 @@ input{
 
 
 input:focus{
-    outline: 2px solid rgba(183, 1, 207);
+    outline: 2px solid #E50914;
     box-shadow: 3px 3px 18px hsla(271, 69%, 15%, 0.5);
 }
 
@@ -114,8 +63,7 @@ input::selection {
   }
 
 .btn{
-    margin-bottom: 2rem;
-    background-color: rgba(183, 1, 207, 0.747);
+    background-color: #E50914;
     color: white;
     font-weight: bold;
     text-transform: uppercase;
@@ -124,8 +72,8 @@ input::selection {
     transition: .3s all ease-in-out;
     cursor: pointer;
 
-    &--delete{
-        color: red;
+    &--swiper{
+        color: #E50914;
         font-size: 22px;
         cursor: pointer;
         transition: .3s all ease-in-out;
@@ -137,53 +85,73 @@ input::selection {
 }
 
 .btn:hover{
-    background-color: rgba(71, 2, 80, 0.747);
+    background-color: #470250be;
     color: white;
 }
 
-h2 {
-    margin-bottom: 1rem;
-    & i{
-    margin-right: 1rem;
-}
+.logo{
+    margin-inline: auto;
+    margin-bottom: 2rem;
 }
 
+.swiper {
+    width: 100%;
+    position: relative;
 
-.pokemon{
-    &__single{
-        padding: 2rem 1rem;
-        background-color: rgba(255, 255, 255, 0.87);
-        box-shadow: 5px 5px 1px hsla(263, 34%, 74%, 0.3);
-        border: none;
-        border-radius: 5px;
+    // &::before{
+    //     content: "";
+    //     position: absolute;
+    //     width: 100%;
+    //     height: 100%;
+    //     right: 0;
+    //     z-index: 4;
+    //     background: linear-gradient(90deg,rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0) 15%, rgba(0, 0, 0, 0) 85%, rgba(0, 0, 0, 0.5) 100%);
+    // }
+    &-slide{
+        font-size: 32px;
+        font-weight: 700;
+        text-transform: uppercase;
         display: flex;
         justify-content: center;
         align-items: center;
-        text-align: left;
-        gap: 1rem;
-    }
-
-
-    &__name{
-        text-transform: uppercase;
-        font-weight: 700;
-        font-size: 20px;
-    }
-
-    &__types{
-        display: flex;
-        gap: 0.5rem;
-    }
-
-    &__type{
-        background-color: #ceb8ba;
-        border-radius: 25px;
-        padding: .3rem .5rem;
-        letter-spacing: 1px;
+        letter-spacing: 2px;
+        background-color: #e2e2e2;
     }
 }
 
-.subtitle{
-    font-weight: 500;
-    font-size: 18px;
+.movie{
+    &__single{
+        position: relative;
+        width: fit-content;
+
+        &::before{
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: 3;
+            background: linear-gradient(0deg,rgba(0, 0, 0, 0.75) 0%, rgba(0, 0, 0, 0) 50%);
+        }
+    }
+
+    &__title{
+        width: 100%;
+        font-size: 16px;
+        color: white;
+        position: absolute;
+        bottom: 5%;
+        left: 50%;
+        z-index: 5;
+        transform: translate(-50%, 0);
+    }
+
+    &__img {
+        height: 350px;
+        width: 100%;
+        img{
+            object-fit: cover;
+            width: 100%;
+            height: 100%;
+        }
+    }
 }

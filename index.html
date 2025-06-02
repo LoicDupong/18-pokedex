@@ -3,34 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>15 | API Discovery</title>
+    <title>20 | TMDB API</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
     <link rel="stylesheet" href="./styles/styles.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script src="scripts/main.js" defer></script>
+    
 </head>
 <body>
     <div class="wrapper wrapper__main">
-        <h1>Who is that Pokémon ?</h1>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Netflix_2015_logo.svg/330px-Netflix_2015_logo.svg.png" alt="" class="logo">
         <form action="">
             <div class="input-wrapper">
-                <label for="search" class="label label--search">Search</label>
-                <input type="text" name="search"    id="search"placeholder="Search your favorite pokémon...">
-                <label for=""></label>
+                <input type="text" name="search"    id="search"placeholder="Rechercher un film...">
+                <button class="btn btn--search">Rechercher</button>
             </div>
-            
-            <button class="btn btn--search">Search Pokémon</button>
         </form>
-        <div class="wrapper pagination input-wrapper">
-        <div class="btn btn--previous">Previous</div>
-        <div class="btn btn--next">Next</div>
     </div>
-    </div>
-    <div class="wrapper wrapper__pokedex">
-        
-    </div>
-
-    <div class="wrapper pagination input-wrapper">
-        <div class="btn btn--previous">Previous</div>
-        <div class="btn btn--next">Next</div>
+    <div class="wrapper wrapper--results">
+        <div class="swiper">
+            <div class="swiper-wrapper swiper__results">
+                
+            </div>
+            <div class="btn--swiper swiper-button-prev"></div>
+            <div class="btn--swiper swiper-button-next"></div>
+        </div>
     </div>
 </body>
 </html>

@@ -1,116 +1,53 @@
-const wrapperPokedexHTML = document.querySelector('.wrapper__pokedex');
-const btnSearch = document.querySelector('.btn--search');
-const btnNext = document.querySelector('.btn--next');
-const btnPrevious = document.querySelector('.btn--previous');
+const swiper = new Swiper('.swiper', {
+    // Optional parameters
+    direction: 'horizontal',
+    loop: true,
+    slidesPerView: 6,
+    spaceBetween: 30,
+    // Navigation arrows
+    navigation: {
+      nextEl: '.swiper-button-next',
+      prevEl: '.swiper-button-prev',
+    },
+});
+
 const inputSearch = document.getElementById('search');
-const inputQuantity = document.getElementById('quantity');
-let pokemons;
-let offsetPage = 0
+const btnSearch = document.querySelector('.btn--search');
+const resultsHTML = document.querySelector('.swiper__results');
+const apiKey = `6631e5f1dc96088e0d26b86da29b5b6a`;
+let imgUrl = `https://image.tmdb.org/t/p/w500`;
+let defautImg = `https://motivatevalmorgan.com/wp-content/uploads/2016/06/default-movie-1-300x450.jpg`
+let movies;
 
-async function getAPI() {
-    try {
-        const response = await fetch(`https://pokeapi.co/api/v2/pokemon/`)
-        const data = await response.json();
-        return data.results
-    } catch (error) {
-        alert('Erreur :', error);
-        console.log('Erreur :', error);
-    }
+async function getAPI(query) {
+  try {
+      const response = await fetch(`https://api.themoviedb.org/3/search/movie?query=${query}&api_key=${apiKey}&include_adult=false&language=en-US&page=1`);
+      const data = await response.json();
+      return data.results;
+  } catch (error) {
+      alert('Erreur :', error);
+  }
 }
 
-async function getOffset(offset = 0) {
-    try {
-        const response = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=20&offset=${offset}`)
-        const data = await response.json();
-        return data.results
-    } catch (error) {
-        alert('Erreur :', error);
-        console.log('Erreur :', error);
-    }
-}
-
-
-
-async function displayPokemons(offset) {
-    wrapperPokedexHTML.innerHTML = "";
-    pokemons = await getOffset(offset);
-    console.log(pokemons);
-    
-    for (const element of pokemons) {
-        const response = await fetch(element.url)
-        const data = await response.json()
-
-        const pokemonName = data.name;
-        const pokemonHeight = data.height/10;
-        const pokemonWeight = data.weight/10;
-        const pokemonImg = data.sprites.front_default;
-        const pokemonHp = data.stats[0].base_stat
-        const pokemonAtk = data.stats[1].base_stat
-        const pokemonDef = data.stats[2].base_stat
-        const pokemonSpAtk = data.stats[3].base_stat
-        const pokemonSpDef = data.stats[4].base_stat
-        const pokemonSpeed = data.stats[5].base_stat
-        const pokemonTypes = data.types;
-
-    
-        const pokemonContainer = document.createElement('div');
-        pokemonContainer.className = "pokemon__single";
-        pokemonContainer.innerHTML += `
-        <div class="pokemon__sprite">
-        <img src="${pokemonImg}" alt="${pokemonImg}">
-        </div>
-        <div class="pokemon__infos">
-            <div class="pokemon__name">${pokemonName}</div>
-            <div class="pokemon__types"><span class="subtitle">Type(s): </span></div>
-            <div class="pokemon__height"><span class="subtitle">Height: </span>${pokemonHeight} m</div>
-            <div class="pokemon__weight"><span class="subtitle">Weight: </span>${pokemonWeight} kg</div>
-            <div class="pokemon__stats">
-                <span class="subtitle">Stats:</span>  
-                <p class="stats__hp">hp: ${pokemonHp}</p>
-                <p class="stats__atk">attack: ${pokemonAtk}</p>
-                <p class="stats__def">defense: ${pokemonDef}</p>
-                <p class="stats__spAtk">special-attack: ${pokemonSpAtk}</p>
-                <p class="stats__spDef">special-defense: ${pokemonSpDef}</p>
-                <p class="stats__speed">speed: ${pokemonSpeed}</p>
-            </div>
-        </div>
-        
+async function displayMoviez(query) {
+    resultsHTML.innerHTML = "";
+    movies = await getAPI(query)
+    const popArray =  movies.sort((a, b) => b.popularity - a.popularity);
+    for (const movie of popArray){
+        let imgPath = movie.poster_path ? `${imgUrl}${movie.poster_path}` : `${defautImg}`;
+        const movieContainer = document.createElement('div');
+        movieContainer.classList = "swiper-slide movie__single";
+        movieContainer.innerHTML += `
+        <h2 class="movie__title">${movie.original_title}</h2>
+        <div class="movie__img"><img src="${imgPath}" alt=""></div>
         `
-        wrapperPokedexHTML.append(pokemonContainer);  
-        
-        const typesContainer = pokemonContainer.querySelector('.pokemon__types');
-        for (const type of pokemonTypes) {
-
-            typesContainer.innerHTML += `<div class="pokemon__type pokemon__type--${type.type.name}">${type.type.name}</div>`;
-            
-        };
-        
-    }  
-    
+        resultsHTML.append(movieContainer);
+        console.log(movie.popularity);
+    }
+    swiper.update();
 }
 
-displayPokemons();
-
-btnSearch.addEventListener('click', async (e)=> {
+btnSearch.addEventListener('click', async (e) => {
     e.preventDefault();
-    console.log(pokemons);
-
-})
-btnNext.addEventListener('click', async (e)=> {
-    e.preventDefault();
-    if (offsetPage <= 1322) {
-        offsetPage += 20
-        await displayPokemons(offsetPage);
-    }
-    
-
-})
-btnPrevious.addEventListener('click', async (e)=> {
-    e.preventDefault();
-    if (offsetPage != 0) {
-        offsetPage -= 20
-        await displayPokemons(offsetPage);
-    }
-    
-
+    await displayMoviez(inputSearch.value);
 })
