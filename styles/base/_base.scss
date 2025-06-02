@@ -1,5 +1,6 @@
 body{
     background-color: rgb(34 34 34);
+    padding-bottom: 3rem;
 }
 
 h1{
@@ -137,7 +138,7 @@ input::selection {
 }
 
 .btn:hover{
-    background-color: rgba(71, 2, 80, 0.747);
+    background-color: #470250be;
     color: white;
 }
 
@@ -157,17 +158,29 @@ h2 {
         border: none;
         border-radius: 5px;
         display: flex;
-        justify-content: center;
+        justify-content: space-evenly;
         align-items: center;
         text-align: left;
         gap: 1rem;
+        transition: .3s all ease-in-out;
+
+        &:hover{
+            transform: translateY(-10px);
+            box-shadow: 0px 0px 10px hsla(263, 34%, 74%, 0.9);
+        }
+    }
+
+    &__infos{
+        flex-basis: 60%;
     }
 
 
     &__name{
         text-transform: uppercase;
-        font-weight: 700;
+        font-weight: 900;
         font-size: 20px;
+        margin-bottom: 0.5rem;
+        color: #29012ebe;
     }
 
     &__types{
@@ -176,14 +189,69 @@ h2 {
     }
 
     &__type{
-        background-color: #ceb8ba;
+        background-color: #A8A77A;
+        font-size: 12px;
+        color: whitesmoke;
         border-radius: 25px;
         padding: .3rem .5rem;
         letter-spacing: 1px;
+        cursor: default;
+
+        &--fire { background-color: #EE8130; }
+        &--water { background-color: #6390F0; }
+        &--electric { background-color: #F7D02C; }
+        &--grass { background-color: #7AC74C; }
+        &--ice { background-color: #96D9D6; }
+        &--fighting { background-color: #C22E28; }
+        &--poison { background-color: #A33EA1; }
+        &--ground { background-color: #E2BF65; }
+        &--flying { background-color: #A98FF3; }
+        &--psychic { background-color: #F95587; }
+        &--bug { background-color: #A6B91A; }
+        &--rock { background-color: #B6A136; }
+        &--ghost { background-color: #735797; }
+        &--dragon { background-color: #6F35FC; }
+        &--dark { background-color: #705746; }
+        &--steel { background-color: #B7B7CE; }
+        &--fairy { background-color: #D685AD; }
+
+    }
+
+    &__stats{
+        margin-top: 0.5rem;
+        background-color: white;
+        padding: .2rem 1rem .2rem .2rem;
+        border-radius: 5px;
+        border: solid 1px #910aa3;
+
+        p{
+            color: rgb(97, 97, 97);
+        }
     }
 }
 
 .subtitle{
     font-weight: 500;
     font-size: 18px;
+}
+
+.pagination{
+    display: flex;
+    align-items: center;
+    width: 100%;
+
+    .btn{
+        margin-bottom: 0;
+    }
+
+    &__text{
+        color: white;
+        font-size: 20px;
+        margin-left: auto;
+    }
+}
+
+.logo{
+    margin-inline: auto;
+    margin-bottom: 2rem;
 }

@@ -3,26 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>15 | API Discovery</title>
+    <title>18 | My Pokédex</title>
     <link rel="stylesheet" href="./styles/styles.min.css">
     <script src="scripts/main.js" defer></script>
 </head>
 <body>
     <div class="wrapper wrapper__main">
+        <img src="img/International_Pokémon_logo.svg.png" alt="" class="logo">
         <h1>Who is that Pokémon ?</h1>
         <form action="">
             <div class="input-wrapper">
                 <label for="search" class="label label--search">Search</label>
                 <input type="text" name="search"    id="search"placeholder="Search your favorite pokémon...">
-                <label for=""></label>
             </div>
             
             <button class="btn btn--search">Search Pokémon</button>
         </form>
         <div class="wrapper pagination input-wrapper">
-        <div class="btn btn--previous">Previous</div>
-        <div class="btn btn--next">Next</div>
-    </div>
+            <div class="btn btn--previous">Previous</div>
+            <div class="btn btn--next">Next</div>
+            <p class="pagination__text"></p>
+        </div>
     </div>
     <div class="wrapper wrapper__pokedex">
         
@@ -31,6 +32,7 @@
     <div class="wrapper pagination input-wrapper">
         <div class="btn btn--previous">Previous</div>
         <div class="btn btn--next">Next</div>
+        <p class="pagination__text"></p>
     </div>
 </body>
 </html>
